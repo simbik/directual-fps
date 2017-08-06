@@ -1,0 +1,37 @@
+// @import "base/variables";
+
+// bootstrap
+// @import "base/modal";
+@import "base/bootstrap.min.css";
+@import "base/bootstrap-theme.min.css";
+@import "./base/nprogress";
+@import "./components/authForm";
+@import "./components/PageNavbar";
+
+html, body, #root{
+  height: 100%;
+  font-family: 'ProximaNova-Reg-webfont', 'Roboto-Regular', 'ProximaNovaReg', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+	overflow-y: hidden;
+}
+
+.pageWrapper {
+	margin-top: 10px;
+}
+
+@font-face {
+	font-family: 'ProximaNova-Reg-webfont';
+	src:url('./fonts/ProximaNova-Reg-webfont/ProximaNova-Reg-webfont.eot');
+	src:url('./fonts/ProximaNova-Reg-webfont/ProximaNova-Reg-webfont.eot?#iefix') format('embedded-opentype'),
+		url('./fonts/ProximaNova-Reg-webfont/ProximaNova-Reg-webfont.woff2') format('woff2'),
+		url('./fonts/ProximaNova-Reg-webfont/ProximaNova-Reg-webfont.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Roboto-Regular';
+	src:url('./fonts/Roboto-Regular/Roboto-Regular.eot');
+	src:url('./fonts/Roboto-Regular/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+		url('./fonts/Roboto-Regular/Roboto-Regular.woff2') format('woff2'),
+		url('./fonts/Roboto-Regular/Roboto-Regular.ttf') format('truetype');
+}

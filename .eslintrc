@@ -1,0 +1,40 @@
+{
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": [
+    "flowtype"
+  ],
+  "parser": "babel-eslint",
+  "rules": {
+    "prefer-arrow-callback": 1,
+    "no-confusing-arrow": 1,
+    "func-names": "off",
+    "max-len": 1,
+    "no-unused-expressions": ["error", { "allowTernary": true, "allowShortCircuit": true}],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/forbid-prop-types": [1]
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "__DEBUG__": true,
+    "__DEV__": true,
+    "$": true,
+    "Sly": true,
+    "describe": true,
+    "it": true,
+    "beforeEach": true,
+    "before": true,
+    "afterEach": true,
+    "after": true,
+    "expect": true,
+    "assert": true,
+    "browser": true,
+    "server": true
+  }
+}
