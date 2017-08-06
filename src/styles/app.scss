@@ -4,21 +4,24 @@
 // @import "base/modal";
 @import "base/bootstrap.min.css";
 @import "base/bootstrap-theme.min.css";
+@import "~react-bootstrap-table/dist/react-bootstrap-table-all.min";
 @import "./base/nprogress";
 @import "./components/authForm";
 @import "./components/PageNavbar";
+@import "./components/Filters";
 
 html, body, #root{
   height: 100%;
   font-family: 'ProximaNova-Reg-webfont', 'Roboto-Regular', 'ProximaNovaReg', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
-	overflow-y: hidden;
+  overflow-x: hidden;
 }
 
 .pageWrapper {
 	margin-top: 10px;
 }
+
 
 @font-face {
 	font-family: 'ProximaNova-Reg-webfont';

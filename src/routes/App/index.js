@@ -14,7 +14,7 @@ const App = props => (
 );
 
 App.propTypes = {
-  store: React.PropTypes.shape.isRequired,
+  store: React.PropTypes.object.isRequired,
 };
 
 export default App;

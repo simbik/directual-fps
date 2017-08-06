@@ -30,12 +30,9 @@ export class Home extends Component {
       <Grid>
         <Row>
           <Col xs={12}>
-            <PageNavbar />
-            <PageHeader>Hello Landing Page</PageHeader>
-            <a>now the login/signup routes are denied access</a>
-            <h4 >
-              <button onClick={logout}>Logout</button>
-            </h4>
+            <PageNavbar history={history} header="Directual FPS" logout={logout} />
+            <PageHeader>Добро пожаловать!</PageHeader>
+            <p>Начните с выбора структуры из меню.</p>
           </Col>
         </Row>
       </Grid>

@@ -9,7 +9,7 @@ const Sidebar = props => (
     autoFocus keyboard
   >
     <Modal.Header closeButton>
-      <Modal.Title><h3>Навигация</h3></Modal.Title>
+      <Modal.Title>Навигация</Modal.Title>
     </Modal.Header>
     <Modal.Body>
       { props.children }

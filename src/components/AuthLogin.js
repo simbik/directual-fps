@@ -13,9 +13,9 @@ class AuthLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      appId: '',
-      appSecret: '',
-      networkId: '',
+      appId: '47ef71b0-9a6e-4ece-a35d-859d6ae6e2d4',
+      appSecret: 'LDmhYaKZHzJ',
+      networkId: '1604',
     };
     this.onSubmit = this.onSubmit.bind(this);
   }
