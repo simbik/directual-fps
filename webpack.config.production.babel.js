@@ -21,21 +21,21 @@ module.exports = merge(base, {
   target: 'web',
   entry: {
     js: [
-      path.resolve(__dirname, 'src/main.js')
+      path.resolve(__dirname, 'src/main.js'),
     ],
     vendor: [
-      'react', 'react-dom'
-    ]
+      'react', 'react-dom',
+    ],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'js/[name].[chunkhash].js',
-    publicPath: '/'
+    publicPath: '/',
   },
   plugins: [
     new WebpackMd5Hash(),
     new webpack.LoaderOptionsPlugin({
-      minimize: true
+      minimize: true,
     }),
     // new webpack.optimize.UglifyJsPlugin({
     //   compress: {
@@ -44,13 +44,13 @@ module.exports = merge(base, {
     // }),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-      }
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
     }),
     new ExtractTextPlugin({
       filename: 'bundle.css',
       disable: false,
-      allChunks: true
+      allChunks: true,
     }),
     new webpack.optimize.CommonsChunkPlugin({ name: 'common', minChunks: 2 }),
     new HtmlWebpackPlugin({
@@ -66,10 +66,10 @@ module.exports = merge(base, {
         keepClosingSlash: true,
         minifyJS: true,
         minifyCSS: true,
-        minifyURLs: true
+        minifyURLs: true,
       },
-      inject: true
-    })
+      inject: true,
+    }),
   ],
   module: {
     rules: [
@@ -83,9 +83,9 @@ module.exports = merge(base, {
       { test: /(\.css|\.scss)$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
-      }
-    ]
-  }
+          use: ['css-loader', 'sass-loader'],
+        }),
+      },
+    ],
+  },
 });

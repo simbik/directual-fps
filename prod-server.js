@@ -34,7 +34,7 @@ app.get('*', (req, res) => {
     preloadScripts = [
       // Push entry script first, we need to start loading as soon as possible
       // because we need it immediately
-      entry
+      entry,
     ];
 
     // Append chunk of important routes to the preload list
@@ -44,8 +44,8 @@ app.get('*', (req, res) => {
       preloadScripts.push(manifest.routes.home);
     } else {
       const route = req.path.substr(1);
-      if (manifest.routes[ route ]) {
-        preloadScripts.push(manifest.routes[ route ]);
+      if (manifest.routes[route]) {
+        preloadScripts.push(manifest.routes[route]);
       }
     }
   } else {
@@ -65,7 +65,7 @@ app.get('*', (req, res) => {
   res.render('index', {
     ie: req.get('user-agent').indexOf('MSIE') > -1,
     webpackManifest,
-    entry
+    entry,
   });
 });
 

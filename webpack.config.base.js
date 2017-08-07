@@ -8,7 +8,7 @@ module.exports = {
       path.resolve(__dirname, 'src'),
       path.resolve(__dirname, 'src/components/containers'),
       path.resolve(__dirname, 'src/components/presentationals'),
-      'node_modules'
+      'node_modules',
     ],
     alias: {
       src: path.resolve(__dirname, 'src'),
@@ -20,20 +20,20 @@ module.exports = {
       routes: 'src/routes',
       shared: 'src/shared',
       style: 'src/style',
-      utils: 'src/utils'
+      utils: 'src/utils',
     },
-    extensions: ['.js']
+    extensions: ['.js'],
   },
   plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
-      'window.Tether': 'tether'
+      'window.Tether': 'tether',
     }),
-    new ExtractTextPlugin('css/[name]-[hash].css')
+    new ExtractTextPlugin('css/[name]-[hash].css'),
   ],
   module: {
-    rules: []
-  }
+    rules: [],
+  },
 };

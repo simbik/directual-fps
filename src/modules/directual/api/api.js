@@ -178,6 +178,18 @@ class Endpoint {
   search(body) {
     return this.fetch(EndpointMethod.SEARCH, body);
   }
+
+  searchByIdFromIndex(id) {
+    return this.fetch(EndpointMethod.SEARCH, {
+      filters: [
+        {
+          field: 'id',
+          value: id,
+        },
+      ],
+    });
+  }
+
 }
 
 
