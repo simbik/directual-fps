@@ -44,10 +44,12 @@ class PageNavbar extends Component {
     return (
       <Navbar className="PageNavbar">
         <Helmet title={this.props.header} />
-        <Nav className="hideNav">
+        <Nav className="hideNav" bsStyle="pills">
           <NavItem eventKey={1} onClick={() => this.updateSidebar(true)}>
             <Glyphicon glyph="menu-hamburger" />
           </NavItem>
+          <NavItem to="/">{this.props.header}</NavItem>
+          <NavItem onClick={this.props.logout} className="visible-xs"><Glyphicon glyph="log-out" className="logOut" /></NavItem>
           <Sidebar side="left" isVisible={this.state.isVisible} onHide={() => this.updateSidebar(false)}>
             {this.state.structures.map(struct => (
               <div key={struct.sid} className="struct">
@@ -59,13 +61,10 @@ class PageNavbar extends Component {
               ),
               )}
           </Sidebar>
+
         </Nav>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <a href="/">{this.props.header}</a>
-          </Navbar.Brand>
-        </Navbar.Header>
-        <Nav pullRight>
+
+        <Nav pullRight className="hidden-xs">
           <NavItem><img src={directualLogo} alt="Directual" className="directualLogo" /></NavItem>
           <NavItem onClick={this.props.logout}><Glyphicon glyph="log-out" className="logOut" /></NavItem>
         </Nav>

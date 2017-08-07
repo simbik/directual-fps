@@ -33,6 +33,7 @@ export class Home extends Component {
             <PageNavbar history={history} header="Directual FPS" logout={logout} />
             <PageHeader>Добро пожаловать!</PageHeader>
             <p>Начните с выбора структуры из меню.</p>
+
           </Col>
         </Row>
       </Grid>

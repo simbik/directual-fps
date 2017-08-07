@@ -1,3 +1,4 @@
+import promisePoller from 'promise-poller';
 import config from '../config';
 import { checkStatus, parseJSON } from '../net';
 
@@ -116,6 +117,46 @@ class Endpoint {
    */
   create(body) {
     return this.fetch(EndpointMethod.CREATE, body);
+  }
+
+  /**
+   *
+   * @param {Object} body
+   * @return {Promise}
+   */
+  createAndValidate(body) {
+    // 1 добавляем объект в базу данных
+    return this.create(body).then((payload) => {
+      // 2 объект добавлен. у нас есть id объекта
+      const id = payload.result.lastObjectID;
+      // 3 формируем запрос на сервер для promise poller
+      const validateTask = () =>
+        // ищем только что добавленный объект по ID из шага 2
+        this.searchByIdFromIndex(id).then((response) => {
+          const booking = response.result.list[0].obj;
+          const { resp_msg: respMsg, resp_code } = booking;
+          // Нам необходимо дождаться пока поле resp_msg будет заполнено.
+          // Это говорит о том, что все сценарии валидации отработали
+          if (respMsg) return { code: resp_code, message: respMsg, booking };
+          // Если поле пустое - тогда выкидываем Error.
+          // Это необходимо для следующего запроса по документации promisePoller
+          throw new Error('waiting for validate scenario complete');
+        });
+
+      // https://github.com/joeattardi/promise-poller
+      // eslint-disable-next-line no-unused-vars
+      function progress(retriesRemaining, error) {
+        // eslint-disable-next-line no-console
+        console.log(retriesRemaining, 'request validate');
+        console.log(error);
+      }
+      return promisePoller({
+        taskFn: validateTask,
+        progressCallback: progress,
+        // interval: 300,
+        retries: 5,
+      });
+    });
   }
 
 

@@ -5,6 +5,8 @@ import { Grid, Row, Col } from 'react-bootstrap';
 
 import AuthMiddleware from '../../modules/auth/middleware';
 import PageNavbar from '../../components/PageNavbar';
+import Footer from '../../components/Footer';
+import InputForm from '../../containers/InputFormContainer';
 import directual from '../../modules/directual';
 
 const mapStateToProps = () => ({});
@@ -28,16 +30,8 @@ export class Input extends Component {
       hiddenFields: [],
       fields: [],
       groups: [],
-      data: [],
       isLoading: false,
-      pageSize: 20,
-      page: 1,
-      total: 0,
     };
-
-    this.sizePerPageListChange = this.sizePerPageListChange.bind(this);
-    this.onPageChange = this.onPageChange.bind(this);
-    this.toggleField = this.toggleField.bind(this);
   }
 
 
@@ -57,28 +51,6 @@ export class Input extends Component {
     this.updateStructure(structure);
   }
 
-
-  onPageChange(page, sizePerPage) {
-    this.state.pageSize = sizePerPage;
-    this.state.page = page;
-    this.updateStructure(this.state.structure);
-  }
-
-  sizePerPageListChange(sizePerPage) {
-    this.state.pageSize = sizePerPage;
-    this.updateStructure(this.state.structure);
-  }
-
-  toggleColumn(field) {
-    const { hiddenFields } = this.state;
-    if (hiddenFields.includes(field)) {
-      hiddenFields.splice(hiddenFields.indexOf(field), 1);
-    } else {
-      hiddenFields.push(field);
-    }
-    this.setState({ hiddenFields });
-  }
-
   updateStructure(structure) {
     this.state.isLoading = true;
     this.state.structure = structure;
@@ -87,18 +59,7 @@ export class Input extends Component {
       this.setState({ fields, groups });
       this.state.isLoading = false;
       this.forceUpdate();
-      console.log(this.state);
     });
-  }
-
-  toggleField(field) {
-    const { hiddenFields } = this.state;
-    if (hiddenFields.includes(field)) {
-      hiddenFields.splice(hiddenFields.indexOf(field), 1);
-    } else {
-      hiddenFields.push(field);
-    }
-    this.setState({ hiddenFields });
   }
 
   render() {
@@ -108,7 +69,11 @@ export class Input extends Component {
     let viewContent;
 
     if (!isLoading) {
-      viewContent = (<div className="content">asdfasdf</div>);
+      viewContent = (<InputForm
+        fields={this.state.fields}
+        groups={this.state.groups}
+        structure={this.state.structure}
+      />);
     } else {
       viewContent = (<div className="contentLoader">Загрузка...</div>);
     }
@@ -119,6 +84,7 @@ export class Input extends Component {
           <Col xs={12}>
             <PageNavbar history={history} header={header} logout={logout} />
             {viewContent}
+            <Footer />
           </Col>
         </Row>
       </Grid>
