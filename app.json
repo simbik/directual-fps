@@ -3,6 +3,7 @@
     {
       "name": "directual-fps",
       "script": "./bin/www",
+      "watch": true,
       "env": {
         "NODE_ENV": "production",
         "PORT": "3000"
