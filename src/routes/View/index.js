@@ -39,8 +39,8 @@ export class View extends Component {
     this.sizePerPageListChange = this.sizePerPageListChange.bind(this);
     this.onPageChange = this.onPageChange.bind(this);
     this.toggleField = this.toggleField.bind(this);
+    this.onFilterChange = this.onFilterChange.bind(this);
   }
-
 
   componentWillMount() {
     const { structure } = this.props.match.params;
@@ -58,16 +58,29 @@ export class View extends Component {
     this.updateStructure(structure);
   }
 
+  onFilterChange(filterObj) {
+    let filters = [];
+    filters = Object.keys(filterObj).map((key) => {
+      const filter = filterObj[key];
+      return {
+        field: key,
+        value: (filter.type !== 'NumberFilter') ? filter.value : filter.value.number,
+        exp: (filter.type !== 'NumberFilter' || filter.value.comparator === '=') ? '==' : filter.value.comparator,
+      };
+    });
+    this.setState({ filters });
+    this.updateData();
+  }
 
   onPageChange(page, sizePerPage) {
     this.state.pageSize = sizePerPage;
     this.state.page = page;
-    this.updateStructure(this.state.structure);
+    this.updateData();
   }
 
   sizePerPageListChange(sizePerPage) {
     this.state.pageSize = sizePerPage;
-    this.updateStructure(this.state.structure);
+    this.updateData();
   }
 
   toggleColumn(field) {
@@ -87,9 +100,7 @@ export class View extends Component {
       const { fields, groups } = metaResult.result;
       this.setState({ fields, groups });
       const searchData = {
-        filters: [
-
-        ],
+        filters: this.state.filters,
         fetch: '',
         fields: '',
         pageSize: this.state.pageSize,
@@ -105,6 +116,26 @@ export class View extends Component {
         this.state.isLoading = false;
         this.forceUpdate();
       });
+    });
+  }
+
+  updateData() {
+    const searchData = {
+      filters: this.state.filters,
+      fetch: '',
+      fields: '',
+      pageSize: this.state.pageSize,
+      page: Number(this.state.page - 1),
+      allObjects: true,
+      orders: [],
+    };
+    directual.api.structure(this.state.structure).search(searchData).then((dataResult) => {
+      const { list, pageInfo } = dataResult.result;
+      const data = list.map(el => el.obj);
+      this.setState({ data });
+      this.state.total = pageInfo.tableSize;
+      this.state.isLoading = false;
+      this.forceUpdate();
     });
   }
 
@@ -136,6 +167,7 @@ export class View extends Component {
         onPageChange={this.onPageChange}
         sizePerPageListChange={this.sizePerPageListChange}
         toggleField={this.toggleField}
+        onFilterChange={this.onFilterChange}
       />);
     } else {
       viewContent = (<div className="contentLoader">Загрузка...</div>);

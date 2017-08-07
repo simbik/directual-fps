@@ -16,6 +16,7 @@ export class ViewTableContainer extends Component {
     sizePerPageListChange: PropTypes.func.isRequired,
     onPageChange: PropTypes.func.isRequired,
     toggleField: PropTypes.func.isRequired,
+    onFilterChange: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -24,7 +25,6 @@ export class ViewTableContainer extends Component {
     this.onPageChange = this.props.onPageChange.bind(this);
     this.toggleField = this.props.toggleField.bind(this);
   }
-
 
   render() {
     const tableOptions = {
@@ -44,6 +44,7 @@ export class ViewTableContainer extends Component {
       paginationPosition: 'both',
       onPageChange: this.onPageChange,
       onSizePerPageList: this.sizePerPageListChange,
+      onFilterChange: this.props.onFilterChange,
     };
     return (
       <div className="viewContent">
@@ -72,6 +73,10 @@ export class ViewTableContainer extends Component {
                 isKey={field.sysName === 'id'}
                 tdStyle={{ minWidth: '200px' }}
                 hidden={this.props.hiddenFields.includes(field.sysName)}
+                filter={field.dataType !== 'number' ?
+                  { type: 'TextFilter' } :
+                { type: 'NumberFilter',
+                  numberComparators: ['=', '>', '<='] }}
                 width="200px"
               >{field.name}</TableHeaderColumn>)}
           </BootstrapTable>

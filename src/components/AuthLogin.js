@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Grid, Row, Col, PageHeader, Panel, FormControl, Button } from 'react-bootstrap';
+import directualLogo from '../img/directual-logo.png';
 
 class AuthLogin extends Component {
 
@@ -38,6 +39,8 @@ class AuthLogin extends Component {
           <Col xs={12}>
             <Panel className="authWrapper">
               <div className="authFormWrapper">
+                <img src={directualLogo} alt="Directual" className="authLogo" />
+                <hr />
                 <div className="authFormRow">
                   <PageHeader>Вход</PageHeader>
                 </div>
