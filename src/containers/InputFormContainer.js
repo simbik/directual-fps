@@ -52,15 +52,18 @@ export class InputFormContainer extends Component {
       <div className="inputContent">
         <Form onSubmit={this.onSubmit} name="form" className="inputForm">
           {this.props.fields.map(field => (
-            <FieldGroup
-              key={field.sysName}
-              id={field.sysName}
-              type={field.dataType}
-              label={field.name}
-              name={field.sysName}
-              placeholder="Введите значение"
-              onChange={this.onChange}
-            />
+            !field.tags.includes('system') &&
+            (
+              <FieldGroup
+                key={field.sysName}
+                id={field.sysName}
+                type={field.dataType}
+                label={field.name}
+                name={field.sysName}
+                placeholder="Введите значение"
+                onChange={this.onChange}
+              />
+            )
           ))}
           <Button type="submit">
             Отправить
