@@ -25,21 +25,10 @@ export class View extends Component {
     this.state = {
       structure: '',
       structureMeta: [],
-      filters: [],
-      hiddenFields: [],
       fields: [],
       groups: [],
-      data: [],
       isLoading: false,
-      pageSize: 20,
-      page: 1,
-      total: 0,
     };
-
-    this.sizePerPageListChange = this.sizePerPageListChange.bind(this);
-    this.onPageChange = this.onPageChange.bind(this);
-    this.toggleField = this.toggleField.bind(this);
-    this.onFilterChange = this.onFilterChange.bind(this);
   }
 
   componentWillMount() {
@@ -50,47 +39,10 @@ export class View extends Component {
   componentWillReceiveProps(nextProps) {
     const { structure } = nextProps.match.params;
     this.state.hiddenFields = [];
-    this.state.filters = [];
     this.state.fields = [];
     this.state.groups = [];
-    this.state.data = [];
     this.state.structureMeta = [];
     this.updateStructure(structure);
-  }
-
-  onFilterChange(filterObj) {
-    let filters = [];
-    filters = Object.keys(filterObj).map((key) => {
-      const filter = filterObj[key];
-      return {
-        field: key,
-        value: (filter.type !== 'NumberFilter') ? filter.value : filter.value.number,
-        exp: (filter.type !== 'NumberFilter' || filter.value.comparator === '=') ? '==' : filter.value.comparator,
-      };
-    });
-    this.setState({ filters });
-    this.updateData();
-  }
-
-  onPageChange(page, sizePerPage) {
-    this.state.pageSize = sizePerPage;
-    this.state.page = page;
-    this.updateData();
-  }
-
-  sizePerPageListChange(sizePerPage) {
-    this.state.pageSize = sizePerPage;
-    this.updateData();
-  }
-
-  toggleColumn(field) {
-    const { hiddenFields } = this.state;
-    if (hiddenFields.includes(field)) {
-      hiddenFields.splice(hiddenFields.indexOf(field), 1);
-    } else {
-      hiddenFields.push(field);
-    }
-    this.setState({ hiddenFields });
   }
 
   updateStructure(structure) {
@@ -98,55 +50,8 @@ export class View extends Component {
     this.state.structure = structure;
     directual.api.structure(this.state.structure).getMetaInfo().then((metaResult) => {
       const { fields, groups } = metaResult.result;
-      this.setState({ fields, groups });
-      const searchData = {
-        filters: this.state.filters,
-        fetch: '',
-        fields: '',
-        pageSize: this.state.pageSize,
-        page: Number(this.state.page - 1),
-        allObjects: true,
-        orders: [],
-      };
-      directual.api.structure(this.state.structure).search(searchData).then((dataResult) => {
-        const { list, pageInfo } = dataResult.result;
-        const data = list.map(el => el.obj);
-        this.setState({ data });
-        this.state.total = pageInfo.tableSize;
-        this.state.isLoading = false;
-        this.forceUpdate();
-      });
+      this.setState({ fields, groups, isLoading: false });
     });
-  }
-
-  updateData() {
-    const searchData = {
-      filters: this.state.filters,
-      fetch: '',
-      fields: '',
-      pageSize: this.state.pageSize,
-      page: Number(this.state.page - 1),
-      allObjects: true,
-      orders: [],
-    };
-    directual.api.structure(this.state.structure).search(searchData).then((dataResult) => {
-      const { list, pageInfo } = dataResult.result;
-      const data = list.map(el => el.obj);
-      this.setState({ data });
-      this.state.total = pageInfo.tableSize;
-      this.state.isLoading = false;
-      this.forceUpdate();
-    });
-  }
-
-  toggleField(field) {
-    const { hiddenFields } = this.state;
-    if (hiddenFields.includes(field)) {
-      hiddenFields.splice(hiddenFields.indexOf(field), 1);
-    } else {
-      hiddenFields.push(field);
-    }
-    this.setState({ hiddenFields });
   }
 
   render() {
@@ -157,17 +62,8 @@ export class View extends Component {
 
     if (!isLoading) {
       viewContent = (<ViewTable
-        page={this.state.page}
-        data={this.state.data}
+        structure={this.state.structure}
         fields={this.state.fields}
-        filters={this.state.filters}
-        hiddenFields={this.state.hiddenFields}
-        total={this.state.total}
-        pageSize={this.state.pageSize}
-        onPageChange={this.onPageChange}
-        sizePerPageListChange={this.sizePerPageListChange}
-        toggleField={this.toggleField}
-        onFilterChange={this.onFilterChange}
       />);
     } else {
       viewContent = (<div className="contentLoader">Загрузка...</div>);
