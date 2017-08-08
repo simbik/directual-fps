@@ -15,14 +15,13 @@ export default class AuthMiddleware {
   static signinWithUserCredentials(dispatch, credentials) {
     // fake login
     if (credentials) {
-      setTimeout(() => {
-        LocalStorageManager.setDirectualConfig(
-          credentials.appId,
-          credentials.appSecret,
-          credentials.networkId,
-        );
-        dispatch(AuthActions.signinSuccessful());
-      }, 500);
+      LocalStorageManager.setDirectualConfig(
+        credentials.appId,
+        credentials.appSecret,
+        credentials.networkId,
+      );
+      dispatch(AuthActions.signinSuccessful());
+      window.location.reload();
     } else {
       dispatch(AuthActions.signinRejected('error no credentials'));
     }

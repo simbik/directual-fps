@@ -39,7 +39,7 @@
   margin: 50px 0 100px 0;
   list-style: none;
   justify-content: center;
-  width: 500px;
+  max-width: 500px;
   border: 1px dashed #333;
   padding: 20px 40px;
 }
@@ -47,4 +47,10 @@
 .authLogo {
   max-width: 500px;
   width: 100%;
+}
+
+.authFormRow button {
+  width: 100%;
+  font-size: 30px;
+  padding: 0 0;
 }
