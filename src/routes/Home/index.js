@@ -30,7 +30,7 @@ export class Home extends Component {
       <Grid>
         <Row>
           <Col xs={12}>
-            <PageNavbar history={history} header="Directual FPS" logout={logout} />
+            <PageNavbar history={history} header="Dashboard" logout={logout} />
             <PageHeader>Добро пожаловать!</PageHeader>
             <p>Начните с выбора структуры из меню.</p>
 

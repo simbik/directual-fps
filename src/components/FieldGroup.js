@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import DatePicker from 'react-bootstrap-date-picker';
+import Datetime from 'react-datetime';
+import moment from 'moment';
 
 
 export class FieldGroup extends Component {
@@ -17,20 +18,20 @@ export class FieldGroup extends Component {
     help: '',
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      form: {},
-    };
-  }
-
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
-    const state = this.state;
     const { id, label, help, type, onChange, ...other } = this.props;
-    const onDateChange = function (value, formattedValue) {
-      onChange(null, formattedValue, this);
-      state.form[id] = formattedValue;
+    const onDateChange = function (value) {
+      let date;
+      if (value instanceof moment) {
+        date = value.format();
+      } else {
+        date = value;
+      }
+      onChange(null, date, this);
     };
 
     const getField = function () {
@@ -46,7 +47,7 @@ export class FieldGroup extends Component {
           field = (<FormControl type="email" onChange={onChange} {...other} />);
           break;
         case 'date':
-          field = (<DatePicker dateFormat="YYYY-MM-DD" onChange={onDateChange} value={state.form[id]} {...other} />);
+          field = (<Datetime onChange={onDateChange} locale="ru" dateFormat="YYYY-MM-DD" timeFormat="HH:mm" inputProps={{ placeholder: 'Выберите дату' }} closeOnSelect closeOnTab utc {...other} />);
           break;
         default:
           field = (<FormControl type="text" onChange={onChange} {...other} />);

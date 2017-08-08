@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Grid, Row, Col, PageHeader, Panel, FormControl, Button } from 'react-bootstrap';
-import directualLogo from '../img/directual-logo.png';
+import directualLogo from '../styles/img/directual-logo.png';
 
 class AuthLogin extends Component {
 

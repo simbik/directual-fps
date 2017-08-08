@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import directual from '../modules/directual';
 import Sidebar from './Sidebar';
-import directualLogo from '../img/directual-logo.png';
+import directualLogo from '../styles/img/directual-logo.png';
 
 class PageNavbar extends Component {
   static propTypes = {
