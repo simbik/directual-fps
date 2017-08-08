@@ -133,11 +133,11 @@ class Endpoint {
       const validateTask = () =>
         // ищем только что добавленный объект по ID из шага 2
         this.searchByIdFromIndex(id).then((response) => {
-          const booking = response.result.list[0].obj;
-          const { resp_msg: respMsg, resp_code } = booking;
+          const object = response.result.list[0].obj;
+          const { resp_msg: respMsg, resp_code } = object;
           // Нам необходимо дождаться пока поле resp_msg будет заполнено.
           // Это говорит о том, что все сценарии валидации отработали
-          if (respMsg) return { code: resp_code, message: respMsg, booking };
+          if (respMsg) return { code: resp_code, message: respMsg, object };
           // Если поле пустое - тогда выкидываем Error.
           // Это необходимо для следующего запроса по документации promisePoller
           throw new Error('waiting for validate scenario complete');
