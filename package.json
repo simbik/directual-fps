@@ -28,6 +28,7 @@
     "react": "^15.0.1",
     "react-bootstrap": "^0.31.0",
     "react-bootstrap-table": "^4.0.0",
+    "react-bootstrap-typeahead": "^1.4.2",
     "react-datetime": "^2.9.0",
     "react-dom": "^15.0.1",
     "react-helmet": "^4.0.0",

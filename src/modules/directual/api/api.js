@@ -56,7 +56,6 @@ class Endpoint {
     this.name = null;
   }
 
-
   /**
    *
    * @param {EndpointMethod} endpointMethod
