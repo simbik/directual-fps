@@ -110,10 +110,10 @@ export class FieldGroup extends Component {
         break;
       case 'number':
       case 'decimal':
-        field = (<FormControl type="number" onChange={onChange} {...other} />);
+        field = (<FormControl type="number" onChange={onChange} required={`${required}`} {...other} />);
         break;
       case 'email':
-        field = (<FormControl type="email" onChange={onChange} {...other} />);
+        field = (<FormControl type="email" onChange={onChange} required={`${required}`} {...other} />);
         break;
       case 'date':
         field = (<Datetime
@@ -144,7 +144,7 @@ export class FieldGroup extends Component {
         />);
         break;
       default:
-        field = (<FormControl type="text" onChange={onChange} required={required} {...other} />);
+        field = (<FormControl type="text" onChange={onChange} required={`${required}`} {...other} />);
         break;
     }
     if (field) {
