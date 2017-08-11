@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { FieldGroup } from '../components/FieldGroup';
 import directual from '../modules/directual';
 
@@ -16,6 +16,9 @@ export class InputFormContainer extends Component {
     this.state = {
       form: {},
       structure: this.props.structure,
+      alertMessage: '',
+      alertStyle: 'danger',
+      showAlert: false,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -28,7 +31,14 @@ export class InputFormContainer extends Component {
       .structure(this.state.structure)
       .createAndValidate(this.state.form)
       .then((resp) => {
-        console.log(resp);
+        const { message: alertMessage, code } = resp;
+        (alertMessage) ? this.state.alertMessage = alertMessage : this.state.alertMessage = '';
+        if (code !== '00') {
+          this.state.alertStyle = 'danger';
+        } else {
+          this.state.alertStyle = 'success';
+        }
+        this.handleAlertShow();
       });
   }
 
@@ -38,7 +48,7 @@ export class InputFormContainer extends Component {
     let el;
     if (event === null) {
       val = value;
-      el = element.name;
+      el = element;
     } else {
       val = event.target.value;
       el = event.target.id;
@@ -47,9 +57,23 @@ export class InputFormContainer extends Component {
     this.setState({ form: this.state.form });
   }
 
+  handleAlertDismiss() {
+    this.setState({ showAlert: false });
+  }
+
+  handleAlertShow() {
+    this.setState({ showAlert: true });
+  }
+
   render() {
     return (
       <div className="inputContent">
+        {this.state.showAlert && (
+        <Alert bsStyle={this.state.alertStyle} onDismiss={this.handleAlertDismiss}>
+          <h4>{this.state.alertStyle !== 'danger' ? 'Успех!' : 'Ошибка!'}</h4>
+          <p>{this.state.errorMessage}</p>
+        </Alert>)
+        }
         <Form onSubmit={this.onSubmit} name="form" className="inputForm">
           {this.props.fields.map(field => (
             !field.tags.includes('system') &&
@@ -60,6 +84,8 @@ export class InputFormContainer extends Component {
                 type={field.dataType}
                 label={field.name}
                 name={field.sysName}
+                link={field.link}
+                required={field.tags.includes('required')}
                 placeholder="Введите значение"
                 onChange={this.onChange}
               />
