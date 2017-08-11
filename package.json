@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node ./bin/www --babel",
     "dev": "node dev-server.js",
-    "build": "webpack --json > manifest.json -p --config webpack.config.production.babel.js"
+    "build": "webpack --json > manifest.json -p --config webpack.config.production.babel.js",
+    "postinstall": "npm run build"
   },
   "author": "",
   "dependencies": {
